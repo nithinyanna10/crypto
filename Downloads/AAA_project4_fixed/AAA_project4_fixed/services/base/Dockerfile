@@ -38,4 +38,5 @@ COPY . .
 EXPOSE 8501
 
 # Default command to run Streamlit app
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.enableCORS=false", "--server.headless=true"]
+CMD ["streamlit", "run", "services/streamlit_app/streamlit_app.py", "--server.port=8501", "--server.enableCORS=false", "--server.headless=true"]
+
