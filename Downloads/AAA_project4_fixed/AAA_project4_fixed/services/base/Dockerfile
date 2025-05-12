@@ -15,15 +15,12 @@ RUN apt-get update && apt-get install -y \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install TA-Lib (required by some trading indicators)
+# Install TA-Lib
 RUN wget https://github.com/ta-lib/ta-lib/releases/download/v0.6.4/ta-lib-0.6.4-src.tar.gz && \
     tar -xzf ta-lib-0.6.4-src.tar.gz && \
     cd ta-lib-0.6.4 && \
-    ./configure && \
-    make && \
-    make install && \
-    cd .. && \
-    rm -rf ta-lib-0.6.4 ta-lib-0.6.4-src.tar.gz
+    ./configure && make && make install && \
+    cd .. && rm -rf ta-lib-0.6.4 ta-lib-0.6.4-src.tar.gz
 
 ENV LD_LIBRARY_PATH=/usr/local/lib
 
@@ -32,11 +29,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy your Streamlit app
-COPY . .
+COPY streamlit_app.py .
 
-# Set the port Streamlit should run on
+# Set Streamlit port
 EXPOSE 8501
 
-# Default command to run Streamlit app
-CMD ["streamlit", "run", "services/streamlit_app/streamlit_app.py", "--server.port=8501", "--server.enableCORS=false", "--server.headless=true"]
-
+# Start the app
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.enableCORS=false", "--server.headless=true"]
