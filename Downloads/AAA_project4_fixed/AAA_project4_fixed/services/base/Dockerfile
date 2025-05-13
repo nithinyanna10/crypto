@@ -28,13 +28,9 @@ ENV LD_LIBRARY_PATH=/usr/local/lib
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your Streamlit app
+# Copy Streamlit app and DuckDB file
 COPY streamlit_app.py .
+COPY data/crypto.duckdb data/  # Make sure this file exists in your repo!
 
-# Set Streamlit port
-EXPOSE 8501
-
-# Start the app
-CMD streamlit run streamlit_app.py --server.port=$PORT --server.enableXsrfProtection=false --server.headless=true
-
-
+# Streamlit runs on Render-assigned $PORT
+CMD bash -c "streamlit run streamlit_app.py --server.port=${PORT:-8501} --server.enableXsrfProtection=false --server.headless=true"
