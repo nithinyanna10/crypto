@@ -2,7 +2,7 @@ name: Scheduled Model Training
 
 on:
   schedule:
-    - cron: '50 * * * *'  # Every hour at :50 (UTC)
+    - cron: '50 * * * *'  # every hour at :50 (UTC)
   workflow_dispatch:
 
 jobs:
@@ -17,9 +17,25 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: Install dependencies
+      - name: Install dependencies manually
         run: |
-          pip install --no-cache-dir -r services/base/requirements.txt
+          pip install --no-cache-dir \
+            confluent-kafka \
+            duckdb \
+            joblib \
+            jupyter \
+            lightgbm \
+            matplotlib \
+            optuna \
+            pandas \
+            plotly \
+            pyarrow \
+            python-dotenv \
+            quixstreams \
+            scikit-learn \
+            streamlit \
+            TA-Lib \
+            websockets
 
       - name: Run training script
         run: |
