@@ -15,7 +15,7 @@ PASSWORD = os.getenv(
 )  # Default fallback
 
 # --- CONFIG ---
-DUCKDB_FILE = "/data/crypto.duckdb"
+DUCKDB_FILE = "crypto.duckdb"
 CANDLES_TABLE = "candles"
 STATE_TABLE = "tradebot_state"
 MODEL_METRICS_PATH = "/data/models/latest.json"
