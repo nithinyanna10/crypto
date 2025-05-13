@@ -2,7 +2,7 @@ name: Scheduled Model Training
 
 on:
   schedule:
-    - cron: '50 * * * *'
+    - cron: '50 * * * *'  # Every hour at minute 50 UTC
   workflow_dispatch:
 
 jobs:
@@ -17,16 +17,20 @@ jobs:
         with:
           python-version: 3.11
 
-      - name: Install TA-Lib system dependencies
+      - name: Install TA-Lib C Library
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential wget
           wget http://prdownloads.sourceforge.net/ta-lib/ta-lib-0.4.0-src.tar.gz
           tar -xvzf ta-lib-0.4.0-src.tar.gz
           cd ta-lib/
-          ./configure --prefix=/usr
+          ./configure --prefix=/usr/local
           make
           sudo make install
+
+          # Fix for linker
+          echo "/usr/local/lib" | sudo tee -a /etc/ld.so.conf.d/ta-lib.conf
+          sudo ldconfig
 
       - name: Install Python dependencies
         run: |
