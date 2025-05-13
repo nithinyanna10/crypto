@@ -1,0 +1,26 @@
+name: Scheduled Trade Bot
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+  workflow_dispatch:
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir -r services/base/requirements.txt
+
+      - name: Run trade bot script
+        run: |
+          python services/trade_bot/trade_bot.py
