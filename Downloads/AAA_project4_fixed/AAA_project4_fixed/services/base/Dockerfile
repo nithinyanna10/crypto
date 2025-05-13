@@ -35,4 +35,5 @@ COPY streamlit_app.py .
 EXPOSE 8501
 
 # Start the app
-CMD ["streamlit", "run", "streamlit_app.py", "--server.port=8501", "--server.enableCORS=false", "--server.headless=true"]
+CMD ["streamlit", "run", "streamlit_app.py", "--server.port=$PORT", "--server.enableXsrfProtection=false", "--server.headless=true"]
+
